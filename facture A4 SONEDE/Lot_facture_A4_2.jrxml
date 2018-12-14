@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="glob2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TED_LOT" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."+File.separator]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ORG_CODE" class="java.lang.String"/>
+	<parameter name="RUN_ID" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select tmp.deb_id, rownum ordre
+from V_EDLOT1 tmp
+where Lot =$P{TED_LOT}
+and tmp.org_code=$P{ORG_CODE}
+and tmp.run_id=$P{RUN_ID}]]>
+	</queryString>
+	<field name="DEB_ID" class="java.math.BigDecimal"/>
+	<field name="ORDRE" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="126" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="125"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ORD">
+					<subreportParameterExpression><![CDATA[$F{ORDRE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="deb_id">
+					<subreportParameterExpression><![CDATA[$F{DEB_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "FACT_lot_xml.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="125" width="100" height="1"/>
+			</break>
+		</band>
+	</detail>
+</jasperReport>

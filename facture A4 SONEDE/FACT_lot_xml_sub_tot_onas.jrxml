@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FACT_lot_xml_sub_ligne_sonede" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BIL_ID" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select *
+from V_EDLIGNE_jasper_snd where bil_id=$P{BIL_ID}]]>
+	</queryString>
+	<field name="BIL_ID" class="java.math.BigDecimal"/>
+	<field name="NOMLIGNE" class="java.lang.String"/>
+	<field name="QUANTITEFACTUREE" class="java.math.BigDecimal"/>
+	<field name="PRIXUNITAIRE" class="java.math.BigDecimal"/>
+	<field name="MNTHT" class="java.math.BigDecimal"/>
+	<field name="TVA" class="java.lang.String"/>
+	<field name="MNTTVA" class="java.math.BigDecimal"/>
+	<field name="MNTTTC" class="java.math.BigDecimal"/>
+	<field name="PRESTATION" class="java.lang.String"/>
+	<field name="NomLigne" class="java.lang.String"/>
+	<sortField name="NomLigne"/>
+	<variable name="totMTTCONAS" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{MNTTTC}]]></variableExpression>
+	</variable>
+	<filterExpression><![CDATA[$F{PRESTATION}=="PRSASSAIN"]]></filterExpression>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="29">
+			<textField pattern="###0.000">
+				<reportElement x="19" y="5" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{totMTTCONAS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

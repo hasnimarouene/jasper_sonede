@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FACT_lot_xml_sub_ligne_sonede" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BIL_ID" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select bil_id,NomLigne,decode(ite_code,'VAR_ONAS_POL5', (select QuantiteFacturee from V_EDLIGNE_JASPER_SND where bil_id  = $P{BIL_ID} and ite_code='CSM_STD'), QuantiteFacturee) QuantiteFacturee ,
+decode(ite_code,'VAR_ONAS_POL5',(select to_char(PK_GENUTILITY.TONUMBER(suv.suv_value),'FM999999990D999')
+    from    gensubscriptype  sut,
+           agrsubscription    asu,
+           agrsubscriptionvalue suv,
+           gendebt  deb,
+           genbill  bil
+    where
+         asu.asu_id = suv.asu_id
+         and  sut.sut_id = asu.sut_id
+  and     sut.sut_code='EAU_CPOL'
+  and   asu.sag_id=deb.sag_id
+  and   bil.deb_id=deb.deb_id
+  and   bil.bil_id=$P{BIL_ID})||'*'||TRIM(to_char(PrixUnitaire, '99999990D999') ),to_char(PrixUnitaire,'FM999999990D999')) PrixUnitaire,
+    MntHT,TVA,MntTVA,MntTTC,Prestation
+from V_EDLIGNE_jasper_snd where bil_id=$P{BIL_ID}]]>
+	</queryString>
+	<field name="BIL_ID" class="java.math.BigDecimal"/>
+	<field name="NOMLIGNE" class="java.lang.String"/>
+	<field name="QUANTITEFACTUREE" class="java.math.BigDecimal"/>
+	<field name="PRIXUNITAIRE" class="java.lang.String"/>
+	<field name="MNTHT" class="java.math.BigDecimal"/>
+	<field name="TVA" class="java.lang.String"/>
+	<field name="MNTTVA" class="java.math.BigDecimal"/>
+	<field name="MNTTTC" class="java.math.BigDecimal"/>
+	<field name="PRESTATION" class="java.lang.String"/>
+	<sortField name="NOMLIGNE"/>
+	<filterExpression><![CDATA[$F{PRESTATION}=="PRSASSAIN"]]></filterExpression>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="324" y="1" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arabic" size="7" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMLIGNE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000">
+				<reportElement x="122" y="0" width="74" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRIXUNITAIRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000">
+				<reportElement x="-27" y="1" width="93" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MNTTTC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="1" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUANTITEFACTUREE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

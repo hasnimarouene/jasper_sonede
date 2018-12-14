@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CONTRO_SANS_INDEX" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_MIN" class="java.lang.String"/>
+	<parameter name="DATE_MAX" class="java.lang.String"/>
+	<parameter name="ROU_CODE_MAX" class="java.lang.String"/>
+	<parameter name="ROU_CODE_MIN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select *
+from
+(
+
+  select  distinct spt_refe,
+           rou_code,
+           spt_routeorder,
+           equ_realnumber,
+           vow_code,
+           aindex,
+           nindex,
+           conso,
+           commentaire,
+           histo,
+           par_shortname,
+           adr_shortname
+   from
+   (
+    select spt.spt_refe,
+           rou.rou_code,
+           spt.spt_routeorder,
+           equ.equ_realnumber,
+           mdl.vow_code,
+           pk_tecmtrread.GetSumIndexById(mrd.mrd_previous_id) aindex,
+           '' nindex,
+           '' conso,
+           pk_tecmtrread.GetCommentaireById(mrd.mrd_id) commentaire,
+           replace(pk_tecmtrread.GetHistoReleve(mrd.spt_id, trunc(mrd.mrd_dt),1),'</b>','') histo,
+           par.par_shortname,
+           adr.adr_shortname
+    from  tecroute rou,
+           tecservicepoint spt,
+           v_genadress adr,
+           agrserviceagr sag,
+           agrcustomeragr cag,
+           techequipment heq,
+           tecequipment equ,
+           tecequmodel mmo,
+           genvocword mdl,
+           v_genparty par,
+           tecmtrread mrd,
+           genvocword vow
+    where  rou.rou_id = spt.rou_id
+    and    spt.adr_id = adr.adr_id
+    and    spt.spt_id = sag.spt_id
+    and    trunc(SAG.SAG_STARTDT) = (select trunc(max(sag2.SAG_STARTDT))
+                                           from   agrserviceagr sag2
+                                           where  sag2.spt_id = SPT.SPT_ID)
+    and    sag.cag_id = cag.cag_id
+    and    cag.par_id = par.par_id
+    and    spt.spt_id = heq.spt_id
+    and    trunc(heq.heq_startdt) = (select trunc(max(heq2.heq_startdt))
+                                     from   techequipment heq2
+                                     where  heq2.spt_id = spt.spt_id)
+    and    heq.heq_enddt is null
+    and    heq.equ_id = equ.equ_id
+    and    equ.mmo_id = mmo.mmo_id
+    and    mmo.vow_model = mdl.vow_id
+    and    spt.spt_id = mrd.spt_id
+    and    mrd.vow_readorig  = vow.vow_id
+    and    vow.vow_code in ('TSP','LISTING')
+    and    rou.rou_code between $P{ROU_CODE_MIN}
+       and    $P{ROU_CODE_MAX}
+
+    and    not exists(select 1
+                      from   tecmtrmeasure mme2
+                      where  mme2.mrd_id = mrd.mrd_id)
+    and    not exists(select 1
+                      from   tecmtrread mrd2,
+                             genvocword vow2
+                      where  mrd2.mrd_previous_id = mrd.mrd_id
+                      and    mrd2.vow_readmeth = vow.vow_id
+                      and    mrd2.mrd_etatfact = 1
+                      and    vow.vow_code = '2')
+    union
+    select spt.spt_refe,
+           rou.rou_code,
+           spt.spt_routeorder,
+           '' equ_realnumber,
+           '' vow_code,
+           null aindex,
+           null nindex,
+           null conso,
+           '' commentaire,
+           '' histo,
+           '' par_shortname,
+           adr.adr_shortname
+    from   tecroute rou,
+           tecservicepoint spt,
+           techequipment heq,
+           v_genadress adr
+    where
+      rou.rou_id = spt.rou_id
+    and    spt.adr_id = adr.adr_id
+    and    spt.spt_id = heq.spt_id
+    and    trunc(heq.heq_startdt) = (select trunc(max(heq2.heq_startdt))
+                                     from   techequipment heq2
+                                     where  heq2.spt_id = spt.spt_id)
+    and    heq.heq_enddt is null
+    and    not exists(select 1
+                      from   tecmtrread mrd2,
+                             genvocword vow2
+                      where  mrd2.spt_id = spt.spt_id
+                      and    mrd2.mrd_etatfact = 1
+                      and  not  exists(select 1 from TECREADITEBILL trb where trb.mrd_id =mrd2.mrd_id )
+)
+and  rou.rou_code between $P{ROU_CODE_MIN} and $P{ROU_CODE_MAX}
+   )
+  order by rou_code, spt_routeorder
+
+)
+]]>
+	</queryString>
+	<field name="SPT_REFE" class="java.lang.String"/>
+	<field name="ROU_CODE" class="java.lang.String"/>
+	<field name="SPT_ROUTEORDER" class="java.math.BigDecimal"/>
+	<field name="EQU_REALNUMBER" class="java.lang.String"/>
+	<field name="VOW_CODE" class="java.lang.String"/>
+	<field name="AINDEX" class="java.math.BigDecimal"/>
+	<field name="NINDEX" class="java.lang.String"/>
+	<field name="CONSO" class="java.lang.String"/>
+	<field name="COMMENTAIRE" class="java.lang.String"/>
+	<field name="HISTO" class="java.lang.String"/>
+	<field name="PAR_SHORTNAME" class="java.lang.String"/>
+	<field name="ADR_SHORTNAME" class="java.lang.String"/>
+	<pageHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="1" y="0" width="80" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PDL	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="0" width="27" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tournée]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="0" width="31" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ordre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="0" width="56" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Compteur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="0" width="46" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Marque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="0" width="34" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[A.Index	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="0" width="33" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[N.Index	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="0" width="36" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Conso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="0" width="140" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Histo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="567" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="627" y="0" width="116" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Adresse]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="83" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Anomalie]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20">
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="80" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SPT_REFE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="81" y="0" width="27" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ROU_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="108" y="0" width="31" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SPT_ROUTEORDER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="0" width="56" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EQU_REALNUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="195" y="0" width="46" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VOW_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="241" y="0" width="34" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AINDEX}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="275" y="0" width="33" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NINDEX}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="308" y="0" width="36" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONSO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="427" y="0" width="140" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HISTO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="567" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arabic" size="8" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PAR_SHORTNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="627" y="0" width="116" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arabic" size="8" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADR_SHORTNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="344" y="0" width="83" height="20"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMMENTAIRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

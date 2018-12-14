@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FACT_lot_xml_sub_ligne_sonede" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="xPath">
+		<![CDATA[/Facture/DetailsLigneFacture/LigneFacture]]>
+	</queryString>
+	<field name="NomLigne" class="java.lang.String">
+		<fieldDescription><![CDATA[NomLigne]]></fieldDescription>
+	</field>
+	<field name="QuantiteFacturee" class="java.lang.String">
+		<fieldDescription><![CDATA[QuantiteFacturee]]></fieldDescription>
+	</field>
+	<field name="Prestation" class="java.lang.String">
+		<fieldDescription><![CDATA[Prestation]]></fieldDescription>
+	</field>
+	<field name="PrixUnitaire" class="java.lang.String">
+		<fieldDescription><![CDATA[PrixUnitaire]]></fieldDescription>
+	</field>
+	<field name="MntHT" class="java.lang.String">
+		<fieldDescription><![CDATA[MntHT]]></fieldDescription>
+	</field>
+	<field name="TVA" class="java.lang.String">
+		<fieldDescription><![CDATA[TVA]]></fieldDescription>
+	</field>
+	<field name="MntTVA" class="java.lang.String">
+		<fieldDescription><![CDATA[MntTVA]]></fieldDescription>
+	</field>
+	<field name="MntTTC" class="java.lang.String">
+		<fieldDescription><![CDATA[MntTTC]]></fieldDescription>
+	</field>
+	<sortField name="NomLigne"/>
+	<variable name="totHTSND" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{MntHT} != null ? new BigDecimal($F{MntHT}.replace(",",".")) : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="totTVASND" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{MntTVA} != null ? new BigDecimal($F{MntTVA}.replace(",",".")) : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="totMTTCSND" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{MntTTC} != null ? new BigDecimal($F{MntTTC}.replace(",",".")) : BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<filterExpression><![CDATA[$F{Prestation}=="PRSEAU"]]></filterExpression>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="25">
+			<textField>
+				<reportElement x="205" y="3" width="82" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totHTSND}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="3" width="72" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totTVASND}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="21" y="3" width="65" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totMTTCSND}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

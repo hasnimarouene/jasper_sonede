@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FACT_lot_xml" language="groovy" printOrder="Horizontal" pageWidth="1048" pageHeight="216" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="1048" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="136"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."+File.separator]]></defaultValueExpression>
+	</parameter>
+	<parameter name="isDuplicata" class="java.lang.String"/>
+	<queryString language="xPath">
+		<![CDATA[/Facture]]>
+	</queryString>
+	<field name="Reference" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Reference]]></fieldDescription>
+	</field>
+	<field name="ConsoSND" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/ConsoSND]]></fieldDescription>
+	</field>
+	<field name="PrixSND" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/PrixSND]]></fieldDescription>
+	</field>
+	<field name="FraisFixSND" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/FraisFixSND]]></fieldDescription>
+	</field>
+	<field name="HTSND" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/HTSND]]></fieldDescription>
+	</field>
+	<field name="TVASND" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/TVASND]]></fieldDescription>
+	</field>
+	<field name="ConsoONAS" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/ConsoONAS]]></fieldDescription>
+	</field>
+	<field name="PrixONAS" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/PrixONAS]]></fieldDescription>
+	</field>
+	<field name="MntONAS" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/MntONAS]]></fieldDescription>
+	</field>
+	<field name="Solde" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Solde]]></fieldDescription>
+	</field>
+	<field name="NetAPayer" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/NetAPayer]]></fieldDescription>
+	</field>
+	<field name="Datexigib" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Datexigib]]></fieldDescription>
+	</field>
+	<field name="TtcSND" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/TtcSND]]></fieldDescription>
+	</field>
+	<field name="TtcONAS" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/TtcONAS]]></fieldDescription>
+	</field>
+	<field name="PiedFact" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/PiedFact]]></fieldDescription>
+	</field>
+	<field name="ClePiedFact" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/ClePiedFact]]></fieldDescription>
+	</field>
+	<field name="NomDistrict" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/NomDistrict]]></fieldDescription>
+	</field>
+	<field name="NomDistrictAr" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/NomDistrictAr]]></fieldDescription>
+	</field>
+	<field name="TelDistrict" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/TelDistrict]]></fieldDescription>
+	</field>
+	<field name="FaxDistrict" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/FaxDistrict]]></fieldDescription>
+	</field>
+	<field name="MailDistrict" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/MailDistrict]]></fieldDescription>
+	</field>
+	<field name="CoordBank" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/CoordBank]]></fieldDescription>
+	</field>
+	<field name="NomPrenomPayeur" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/NomPrenomPayeur]]></fieldDescription>
+	</field>
+	<field name="AdressePayeur" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/AdressePayeur]]></fieldDescription>
+	</field>
+	<field name="AdresseFaireSuivre" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/AdresseFaireSuivre]]></fieldDescription>
+	</field>
+	<field name="CodeDistrict" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/CodeDistrict]]></fieldDescription>
+	</field>
+	<field name="CodeTournee" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/CodeTournee]]></fieldDescription>
+	</field>
+	<field name="Ordre" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Ordre]]></fieldDescription>
+	</field>
+	<field name="ReferenceSag" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/ReferenceSag]]></fieldDescription>
+	</field>
+	<field name="NbreHabitant" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/NbreHabitant]]></fieldDescription>
+	</field>
+	<field name="MTTC" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/MTTC]]></fieldDescription>
+	</field>
+	<field name="DaeExigibl" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/DaeExigibl]]></fieldDescription>
+	</field>
+	<field name="DaeOffic" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/DaeOffic]]></fieldDescription>
+	</field>
+	<field name="AncienRep" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/AncienRep]]></fieldDescription>
+	</field>
+	<field name="NvlRep" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/NvlRep]]></fieldDescription>
+	</field>
+	<field name="District" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/District]]></fieldDescription>
+	</field>
+	<field name="ConsoFact" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/ConsoFact]]></fieldDescription>
+	</field>
+	<field name="NvlIndex" class="java.lang.String">
+		<fieldDescription><![CDATA[Historeleve/LigneHistoReleve/NvlIndex]]></fieldDescription>
+	</field>
+	<field name="PrixUnit" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/PrixUnit]]></fieldDescription>
+	</field>
+	<field name="Frais_fix" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Frais_fix]]></fieldDescription>
+	</field>
+	<field name="Mnt_HT" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Mnt_HT]]></fieldDescription>
+	</field>
+	<field name="Frais_DPOZ_RPOZ" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Frais_DPOZ_RPOZ]]></fieldDescription>
+	</field>
+	<field name="Frais_Coup" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Frais_Coup]]></fieldDescription>
+	</field>
+	<field name="Frais_f_pc" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Frais_f_pc]]></fieldDescription>
+	</field>
+	<field name="Frais_fix2" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Frais_fix]]></fieldDescription>
+	</field>
+	<field name="Mnt" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Mnt]]></fieldDescription>
+	</field>
+	<field name="Mnt_TVA" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Mnt_TVA]]></fieldDescription>
+	</field>
+	<field name="Prorata" class="java.lang.String">
+		<fieldDescription><![CDATA[Historeleve/LigneHistoReleve/Prorata]]></fieldDescription>
+	</field>
+	<field name="AncIndex" class="java.lang.String">
+		<fieldDescription><![CDATA[Historeleve/LigneHistoReleve/AncIndex]]></fieldDescription>
+	</field>
+	<field name="NvlIndex2" class="java.lang.String">
+		<fieldDescription><![CDATA[Historeleve/LigneHistoReleve/NvlIndex]]></fieldDescription>
+	</field>
+	<field name="Consommation" class="java.lang.String">
+		<fieldDescription><![CDATA[Historeleve/LigneHistoReleve/Consommation]]></fieldDescription>
+	</field>
+	<field name="Frais_fix_onas" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Frais_fix_onas]]></fieldDescription>
+	</field>
+	<field name="Mntsoned" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Mntsoned]]></fieldDescription>
+	</field>
+	<field name="Lot" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Lot]]></fieldDescription>
+	</field>
+	<field name="Mntonas" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Mntonas]]></fieldDescription>
+	</field>
+	<field name="Ref" class="java.lang.String">
+		<fieldDescription><![CDATA[Entete/Ref]]></fieldDescription>
+	</field>
+	<background>
+		<band height="212" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="-27" y="0" width="1048" height="212">
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"sonede.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<detail>
+		<band height="212" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="869" y="22" width="149" height="35"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" isBold="false" pdfFontName="Courier" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomPrenomPayeur}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1007" y="68" width="14" height="27"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CodeDistrict}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="951" y="68" width="49" height="17"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ReferenceSag}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="914" y="68" width="31" height="27"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CodeTournee}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="891" y="68" width="27" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ordre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="976" y="100" width="43" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ConsoFact}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="946" y="100" width="31" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PrixUnit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="857" y="169" width="77" height="25"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Frais_fix}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="715" y="121" width="58" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mnt_HT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="718" y="174" width="58" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mntsoned}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="569" y="174" width="58" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mntonas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="873" y="194" width="78" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{MTTC}:$F{DaeExigibl}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="761" y="194" width="77" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{Solde}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="664" y="195" width="72" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MTTC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="569" y="196" width="58" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{DaeExigibl}:$F{MTTC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="686" y="7" width="74" height="26"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="9" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomDistrictAr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="550" y="9" width="83" height="26"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="9" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TelDistrict}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="842" y="68" width="48" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NvlIndex}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="792" y="68" width="48" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AncIndex}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="735" y="68" width="48" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Prorata}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="696" y="68" width="39" height="17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Consommation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="869" y="101" width="70" height="26"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mnt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="715" y="95" width="58" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Frais_f_pc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="714" y="103" width="58" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Frais_Coup}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="715" y="112" width="58" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Frais_DPOZ_RPOZ}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="715" y="130" width="58" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mnt_TVA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="536" y="174" width="29" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ClePiedFact}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="248" y="175" width="91" height="26"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{MTTC}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="174" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{PiedFact}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="96" width="82" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{DaeOffic}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="96" width="91" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{DaeOffic}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="173" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{PiedFact}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="0" y="176" width="57" height="26"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arabic" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{MTTC}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="173" width="29" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{ClePiedFact}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="140" width="180" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot}=="AUTRE"?$F{CoordBank}:""]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="585" y="21" width="293" height="58"/>
+				<c:Code128 xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="10.0" textPosition="none">
+					<c:codeExpression><![CDATA[$F{Reference}]]></c:codeExpression>
+				</c:Code128>
+			</componentElement>
+			<textField>
+				<reportElement x="572" y="44" width="301" height="19"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="12" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AdressePayeur}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="569" y="157" width="58" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arabic" size="10" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Frais_fix_onas}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="594" y="98" width="116" height="55"/>
+				<dataSourceExpression><![CDATA[$P{REPORT_DATA_SOURCE}.subDataSource("//LigneFacture")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "FACT_lot_xml_sub_ligne_onas.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="479" y="71" width="47" height="17"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="ADM"?$F{ReferenceSag}:""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="448" y="71" width="31" height="27"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="ADM"?$F{CodeTournee}:""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="421" y="71" width="27" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="ADM"?$F{Ordre}:""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="381" y="72" width="40" height="27"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Lot}=="ADM"?$F{Ref}:""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="130" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Lot}=="ADM"?$F{PiedFact}:""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
